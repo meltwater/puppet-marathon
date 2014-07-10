@@ -1,7 +1,10 @@
-[Unit]
-Description=Marathon
-After=network.target
-Wants=network.target
+description "Marathon scheduler for Mesos"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+respawn limit 10 5
 
 <% @values = { 'marathon::marathon_assets_path' => scope['marathon::marathon_assets_path'],
                'marathon::marathon_checkpoint' =>  scope['marathon::marathon_checkpoint'],
@@ -30,15 +33,8 @@ Wants=network.target
                'marathon::marathon_zk_state' => scope['marathon::marathon_zk_state'],
                'marathon::marathon_zk_timeout' => scope['marathon::marathon_zk_timeout'],
              } -%>
-[Service]
-ExecStart=<%= @install_dir %>/bin/start <% @values.each do |key,val| -%>
+exec <%= @install_dir %>/bin/start <% @values.each do |key,val| -%>
 <% if val != :undef -%>
  --<% arg = key.sub ('marathon::marathon_', '') -%><%= arg -%> <%= val -%>
 <% end -%>
 <% end -%>
-Restart=on-abort
-Restart=always
-RestartSec=20
-
-[Install]
-WantedBy=multi-user.target

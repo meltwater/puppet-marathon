@@ -41,18 +41,20 @@
 #
 class marathon (
   $version = undef,
+  $ensure = running,
   $source_install = true,
+  $install_java = true,
   $download_url = undef,
   $download_extract_dir = '/tmp',
   $install_dir = '/opt/marathon',
   $user = 'root',
   $group = 'root',
   $marathon_assets_path = undef,
-  $marathon_checkpoint = undef,                   
+  $marathon_checkpoint = undef,
   $marathon_event_subscriber = undef,
   $marathon_executor = undef,
   $marathon_failover_timeout = undef,
-  $marathon_ha = undef,                           
+  $marathon_ha = undef,
   $marathon_hostname = undef,
   $marathon_http_credentials = undef,
   $marathon_http_endpoints = undef,
@@ -60,7 +62,7 @@ class marathon (
   $marathon_https_port = undef,
   $marathon_local_port_max = undef,
   $marathon_local_port_min = undef,
-  $marathon_master = undef,
+  $marathon_master = 'local',
   $marathon_mesos_role = undef,
   $marathon_mesos_user = undef,
   $marathon_reconciliation_frequency = undef,
@@ -69,14 +71,14 @@ class marathon (
   $marathon_ssl_keystore_path = undef,
   $marathon_task_launch_timeout = undef,
   $marathon_task_rate_limit = undef,
-  $marathon_zk = undef,
+  $marathon_zk = 'zk://localhost:2181/marathon',
   $marathon_zk_hosts = undef,
   $marathon_zk_state = undef,
   $marathon_zk_timeout = undef,
 ) {
 
   if $source_install {
-    class { marathon::source:
+    class { 'marathon::source':
       version              => $version,
       download_url         => $download_url,
       download_extract_dir => $download_extract_dir,
@@ -86,4 +88,9 @@ class marathon (
     }
   }
 
+  if $install_java {
+    package { 'java-1.7.0-openjdk':
+      ensure => installed,
+    }
+  }
 }

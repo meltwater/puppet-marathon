@@ -35,21 +35,45 @@ class marathon::source (
 
   exec { "marathon-${version_real} copy to install_dir":
     command => "cp -a ${download_extract_dir}/marathon-${version_real} ${install_dir}",
-    creates => "${install_dir}",
+    creates => $install_dir,
     require => Archive["marathon-${version_real}"],
   }
   ->
-  exec { "chown marathon install_dir":
+  exec { 'chown marathon install_dir':
     command     => "chown -R ${user}:${group} ${install_dir}",
     refreshonly => true,
   }
 
-  file { "marathon-${version_real} service":
-    ensure  => present,
-    path    => "/etc/systemd/system/marathon.service",
-    content => template("marathon/marathon.service.erb"),
-    owner   => $user,
-    group   => $group,
-    require => Exec["chown marathon install_dir"],
+  if $::osfamily == 'RedHat' {
+    if $::os_maj_version < 7 {
+      $provider = undef
+
+      file { "marathon-${version_real} service":
+        ensure  => present,
+        path    => '/etc/init.d/marathon.sh',
+        content => template('marathon/marathon.sh.erb'),
+        mode    => '0755',
+        owner   => $user,
+        group   => $group,
+        require => Exec['chown marathon install_dir'],
+      }
+    }
+  } else {
+    $provider = 'systemd'
+
+    file { "marathon-${version_real} service":
+      ensure  => present,
+      path    => '/etc/systemd/system/marathon.service',
+      content => template('marathon/marathon.service.erb'),
+      owner   => $user,
+      group   => $group,
+      require => Exec['chown marathon install_dir'],
+    }
+  }
+
+  class { 'marathon::service':
+    ensure   => $marathon::ensure,
+    provider => $provider,
+    require  => File["marathon-${version_real} service"],
   }
 }
