@@ -4,7 +4,6 @@ Provides a class to install the Marathon framework for Mesos
 
 Usage
 -----
-Note that this is a defined type, not a class. This allows multiple marathon instances to exist on one machine.
 
 include marathon
 
