@@ -1,0 +1,13 @@
+[Unit]
+Description=Marathon
+After=network.target
+Wants=network.target
+
+[Service]
+ExecStart=<%= @install_dir %>/bin/marathon <% if @marathon_assets_path -%> <%= @marathon_assets_path %> <%- end -%> <% if @marathon_checkpoint -%> <%= @marathon_checkpoint %> <%- end -%> <% if @marathon_event_subscriber -%> <%= @marathon_event_subscriber %> <%- end -%> <% if @marathon_executor -%> <%= @marathon_executor %> <%- end -%> <% if @marathon_failover_timeout -%> <%= @marathon_failover_timeout %> <%- end -%> <% if @marathon_ha -%> <%= @marathon_ha %> <%- end -%> <% if @marathon_hostname -%> <%= @marathon_hostname %> <%- end -%> <% if @marathon_http_credentials -%> <%= @marathon_http_credentials %> <%- end -%> <% if @marathon_http_endpoints -%> <%= @marathon_http_endpoints %> <%- end -%> <% if @marathon_http_port -%> <%= @marathon_http_port %> <%- end -%> <% if @marathon_https_port -%> <%= @marathon_https_port %> <%- end -%> <% if @marathon_local_port_max -%> <%= @marathon_local_port_max %> <%- end -%> <% if @marathon_local_port_min -%> <%= @marathon_local_port_min %> <%- end -%> <% if @marathon_master -%> <%= @marathon_master %> <%- end -%> <% if @marathon_mesos_role -%> <%= @marathon_mesos_role %> <%- end -%> <% if @marathon_mesos_user -%> <%= @marathon_mesos_user %> <%- end -%> <% if @marathon_reconciliation_frequency -%> <%= @marathon_reconciliation_frequency %> <%- end -%> <% if @marathon_reconciliation_initial_delay -%> <%= @marathon_reconciliation_initial_delay %> <%- end -%> <% if @marathon_ssl_keystore_password -%> <%= @marathon_ssl_keystore_password %> <%- end -%> <% if @marathon_ssl_keystore_path -%> <%= @marathon_ssl_keystore_path %> <%- end -%> <% if @marathon_task_launch_timeout -%> <%= @marathon_task_launch_timeout %> <%- end -%> <% if @marathon_task_rate_limit -%> <%= @marathon_task_rate_limit %> <%- end -%> <% if @marathon_zk -%> <%= @marathon_zk %> <%- end -%> <% if @marathon_zk_hosts -%> <%= @marathon_zk_hosts %> <%- end -%> <% if @marathon_zk_state -%> <%= @marathon_zk_state %> <%- end -%> <% if @marathon_zk_timeout -%> <%= @marathon_zk_timeout %> <%- end -%>
+Restart=on-abort
+Restart=always
+RestartSec=20
+
+[Install]
+WantedBy=multi-user.target
