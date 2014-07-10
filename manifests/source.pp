@@ -49,12 +49,15 @@ class marathon::source (
 
       file { "marathon-${version_real} service":
         ensure  => present,
-        path    => '/etc/init.d/marathon.sh',
+        path    => '/etc/init.d/marathon',
         content => template('marathon/marathon.sh.erb'),
         mode    => '0755',
         owner   => $user,
         group   => $group,
         require => Exec['chown marathon install_dir'],
+      }->
+      exec { 'enable marathon':
+        command => 'chkconfig --add marathon; chkconfig marathon on',
       }
     } else {
       $provider = 'systemd'
@@ -66,6 +69,10 @@ class marathon::source (
         owner   => $user,
         group   => $group,
         require => Exec['chown marathon install_dir'],
+      }->
+      exec { 'enable marathon':
+        command => 'systemctl enable marathon.service',
+        creates => '/etc/systemd/system/multi-user.target.wants/marathon.service',
       }
     }
   }
