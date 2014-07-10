@@ -34,7 +34,7 @@ class marathon::source (
   }
 
   exec { "marathon-${version_real} copy to install_dir":
-    command => "cp -a ${download_extract_dir}/marathon-${version_real} ${install_dir}/marathon",
+    command => "cp -a ${download_extract_dir}/marathon-${version_real} ${install_dir}",
     creates => "${install_dir}",
     require => Archive["marathon-${version_real}"],
   }
