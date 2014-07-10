@@ -35,7 +35,7 @@ ExecStart=<%= @install_dir %>/bin/start <% @values.each do |key,val| -%>
 <% if val != :undef -%>
  --<% arg = key.sub ('marathon::marathon_', '') -%><%= arg -%> <%= val -%>
 <% end -%>
-<% end -%>
+<% end %>
 Restart=on-abort
 Restart=always
 RestartSec=20
