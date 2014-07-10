@@ -32,11 +32,10 @@ class marathon::source (
     allow_insecure => true,
     timeout        => 1600,
   }
-
+  ->
   exec { "marathon-${version_real} copy to install_dir":
     command => "cp -a ${download_extract_dir}/marathon-${version_real} ${install_dir}",
     creates => $install_dir,
-    require => Archive["marathon-${version_real}"],
   }
   ->
   exec { 'chown marathon install_dir':
@@ -57,16 +56,17 @@ class marathon::source (
         group   => $group,
         require => Exec['chown marathon install_dir'],
       }
-  } else {
-    $provider = 'systemd'
+    } else {
+      $provider = 'systemd'
 
-    file { "marathon-${version_real} service":
-      ensure  => present,
-      path    => '/etc/systemd/system/marathon.service',
-      content => template('marathon/marathon.service.erb'),
-      owner   => $user,
-      group   => $group,
-      require => Exec['chown marathon install_dir'],
+      file { "marathon-${version_real} service":
+        ensure  => present,
+        path    => '/etc/systemd/system/marathon.service',
+        content => template('marathon/marathon.service.erb'),
+        owner   => $user,
+        group   => $group,
+        require => Exec['chown marathon install_dir'],
+      }
     }
   }
 
