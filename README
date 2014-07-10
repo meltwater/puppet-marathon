@@ -1,18 +1,16 @@
 marathon
 
-Provides a defined type to install as many Marathon UI instances as necessary
+Provides a class to install the Marathon framework for Mesos
 
 Usage
 -----
 Note that this is a defined type, not a class. This allows multiple marathon instances to exist on one machine.
 
-marathon::instance { 'tomcat1':
-  tomcat_webapp_dir => '/var/lib/tomcat/webapps',
-}
+include marathon
 
 Support
 -------
 
-Please log tickets and issues at our [Projects site](https://github.com/meltwater/puppet-marathon)
+This module is currently very young and has only been properly tested with CentOS/RHEL7. Contributions are welcome! Please log tickets and issues at our [Projects site](https://github.com/meltwater/puppet-marathon)
 
-Pull Requests are always welcome
+Pull Requests are always welcome of course.
