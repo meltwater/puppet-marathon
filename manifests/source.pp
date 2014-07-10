@@ -57,7 +57,6 @@ class marathon::source (
         group   => $group,
         require => Exec['chown marathon install_dir'],
       }
-    }
   } else {
     $provider = 'systemd'
 
