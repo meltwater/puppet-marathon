@@ -58,6 +58,7 @@ class marathon::source (
       }->
       exec { 'enable marathon':
         command => 'chkconfig --add marathon; chkconfig marathon on',
+        unless  => 'chkconfig --list marathon| grep ":on"',
       }
     } else {
       $provider = 'systemd'
