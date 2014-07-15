@@ -49,6 +49,8 @@ class marathon (
   $install_dir = '/opt/marathon',
   $user = 'root',
   $group = 'root',
+  $package = 'marathon',
+  $package_ensure = 'installed',
   $marathon_assets_path = undef,
   $marathon_checkpoint = undef,
   $marathon_event_subscriber = undef,
@@ -85,6 +87,14 @@ class marathon (
       install_dir          => $install_dir,
       user                 => $user,
       group                => $group,
+    }
+  } else {
+    class { 'marathon::package':
+      ensure  => $package_ensure,
+      package => $package,
+    }->
+    class { 'marathon::service':
+      ensure => $ensure,
     }
   }
 
