@@ -1,6 +1,9 @@
-marathon
+Marathon
+========
 
-Provides a class to install the Marathon framework for Mesos
+Provides a class to install the Marathon framework for Mesos.
+If you want to run Marathon, you'll likely want to look at this module too:
+https://forge.puppetlabs.com/deric/mesos
 
 Usage
 -----
