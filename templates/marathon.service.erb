@@ -33,7 +33,7 @@ Wants=network.target
 [Service]
 ExecStart=<%= @install_dir %>/bin/start <% @values.each do |key,val| -%>
 <% if val != :undef -%>
- --<% arg = key.sub ('marathon::marathon_', '') -%><%= arg -%> <%= val -%>
+ --<% arg = key.sub('marathon::marathon_', '') -%><%= arg -%> <%= val -%>
 <% end -%>
 <% end %>
 Restart=on-abort
