@@ -1,5 +1,5 @@
 name    'meltwater-marathon'
-version '0.1.0'
+version '0.1.2'
 source 'https://github.com/mesosphere/marathon'
 author 'meltwater'
 license 'Apache License, Version 2.0'
