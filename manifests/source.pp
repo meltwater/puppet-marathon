@@ -44,7 +44,7 @@ class marathon::source (
   }
 
   if $::osfamily == 'RedHat' {
-    if $::os_maj_version < 7 {
+    if $::operatingsystemmajrelease < 7 {
       $provider = undef
 
       file { "marathon-${version_real} service":
