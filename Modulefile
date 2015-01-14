@@ -8,4 +8,3 @@ description 'Puppet Module for Mesos Marathon'
 project_page 'https://github.com/meltwater/puppet-marathon'
 
 dependency 'puppetlabs/stdlib', '>= 2.2.0'
-dependency 'camptocamp-archive'

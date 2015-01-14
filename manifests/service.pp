@@ -1,12 +1,11 @@
 # == Class: marathon::service
 #
-class marathon::service (
-  $ensure = undef,
-  $provider = undef,
-) {
+# Starts the service.
+#
+class marathon::service {
 
   service { 'marathon':
-    ensure   => $ensure,
-    provider => $provider,
+    ensure  => $marathon::service_ensure,
+    enable  => $marathon::service_enable,
   }
 }
