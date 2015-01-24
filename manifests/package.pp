@@ -1,14 +1,8 @@
 # class marathon::package
 class marathon::package (
-  $package = undef,
+  $package = 'marathon',
   $ensure = 'installed',
 ) {
-
-  if $package {
-    $package_real = $package
-  } else {
-    $package_real = 'marathon'
-  }
 
   package { $package:
     ensure => $ensure,
