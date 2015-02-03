@@ -18,17 +18,17 @@ class marathon::install {
     case $marathon::init_style {
       'upstart' : {
         file { '/etc/init/marathon.conf':
-          mode   => '0444',
+          mode    => '0444',
           owner   => 'root',
           group   => 'root',
           content => template('marathon/marathon.upstart.erb'),
         }
         file { '/etc/init.d/marathon':
           ensure => link,
-          target => "/lib/init/upstart-job",
+          target => '/lib/init/upstart-job',
           owner  => root,
           group  => root,
-          mode   => 0755,
+          mode   => '0755',
         }
       }
       'systemd' : {

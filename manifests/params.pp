@@ -1,3 +1,7 @@
+# == Class: marathon::params
+#
+# Parameters for marathon class
+#
 class marathon::params {
   $package           = 'marathon'
   $package_ensure    = 'latest'
