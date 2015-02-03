@@ -4,14 +4,11 @@
 #
 # === Parameters
 #
-# [*version*]
-#   Which version of marathon to install.
-#
 # [*package*]
 #   The package name. Defaults to 'marathon'.
 #
 # [*package_ensure*]
-#   Package ensure. Defaults to latest.
+#   Package ensure. Defaults to latest. Can be used to install a specific version of marathon
 #
 # [*install_java*]
 #   Whether to install the java JDK or not
@@ -35,7 +32,7 @@
 # === Examples
 #
 #  class { marathon:
-#    version => '0.6.0',
+#    package_ensure => '0.6.0',
 #  }
 #
 # === Authors

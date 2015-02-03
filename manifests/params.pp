@@ -5,7 +5,6 @@
 class marathon::params {
   $package           = 'marathon'
   $package_ensure    = 'latest'
-  $version           = '0.7.6'
   $install_java      = true
   $java_version      = 'java-1.7.0-openjdk'
 
