@@ -4,13 +4,21 @@
 #
 class marathon::install {
 
-  package { $marathon::package:
+  if $marathon::version {
+    $marathonpackage = "${marathon::package}-${marathon::version}"
+  } else {
+    $marathonpackage = $marathon::package
+  }
+
+  package { 'marathon':
     ensure => $marathon::package_ensure,
+    name   => $marathonpackage,
   }
 
   if $marathon::install_java {
-    package { $marathon::java_version:
+    package { 'java':
       ensure => installed,
+      name   => $marathon::java_version,
     }
   }
 
@@ -33,6 +41,7 @@ class marathon::install {
       }
       'systemd' : {
         file { '/lib/systemd/system/marathon.service':
+          ensure  => file,
           mode    => '0644',
           owner   => 'root',
           group   => 'root',
@@ -41,6 +50,7 @@ class marathon::install {
       }
       'sysv' : {
         file { '/etc/init.d/marathon':
+          ensure  => file,
           mode    => '0555',
           owner   => 'root',
           group   => 'root',
