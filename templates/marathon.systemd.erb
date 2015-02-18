@@ -4,7 +4,7 @@ After=network.target
 Wants=network.target
 
 [Service]
-ExecStart=/usr/local/bin/marathon --master <%= scope.lookupvar('marathon::master') %> --zk <%= scope.lookupvar('marathon::zk') %> <%= scope.lookupvar('marathon::extra_options') %>
+ExecStart=<%= scope.lookupvar('marathon::bin_dir') %>/marathon --master <%= scope.lookupvar('marathon::master') %> --zk <%= scope.lookupvar('marathon::zk') %> <%= scope.lookupvar('marathon::extra_options') %>
 Restart=on-abort
 Restart=always
 RestartSec=20

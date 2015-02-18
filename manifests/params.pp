@@ -7,6 +7,7 @@ class marathon::params {
   $package_ensure    = 'latest'
   $install_java      = true
   $java_version      = 'java-1.7.0-openjdk'
+  $bin_dir           = '/usr/bin'
 
   $init_style = $::operatingsystem ? {
     'Ubuntu'             => $::lsbdistrelease ? {

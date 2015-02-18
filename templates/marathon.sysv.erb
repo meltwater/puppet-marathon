@@ -21,7 +21,7 @@
 . /etc/rc.d/init.d/functions
 
 prog="marathon"
-cmd="/usr/local/bin/${prog}"
+cmd="<%= scope.lookupvar('marathon::bin_dir') %>/${prog}"
 args="--master <%= scope.lookupvar('marathon::master') %> --zk <%= scope.lookupvar('marathon::zk') %> <%= scope.lookupvar('marathon::extra_options') %>"
 pidfile="/var/run/${prog}"
 lockfile=/var/lock/subsys/$prog
