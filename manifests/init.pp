@@ -46,6 +46,7 @@ class marathon (
   $install_java         = $marathon::params::install_java,
   $java_version         = $marathon::params::java_version,
   $init_style           = $marathon::params::init_style,
+  $bin_path             = $marathon::params::bin_path,
   $service_enable       = true,
   $service_ensure       = 'running',
   $extra_options        = '',
