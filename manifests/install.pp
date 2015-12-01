@@ -22,6 +22,7 @@ class marathon::install {
           owner   => 'root',
           group   => 'root',
           content => template('marathon/marathon.upstart.erb'),
+          notify  => Service['marathon']
         }
         file { '/etc/init.d/marathon':
           ensure => link,
@@ -29,6 +30,7 @@ class marathon::install {
           owner  => root,
           group  => root,
           mode   => '0755',
+          notify => Service['marathon']
         }
       }
       'systemd' : {
@@ -37,6 +39,7 @@ class marathon::install {
           owner   => 'root',
           group   => 'root',
           content => template('marathon/marathon.systemd.erb'),
+          notify  => Service['marathon']
         }
       }
       'sysv' : {
@@ -44,11 +47,13 @@ class marathon::install {
           mode    => '0555',
           owner   => 'root',
           group   => 'root',
-          content => template('marathon/marathon.sysv.erb')
+          content => template('marathon/marathon.sysv.erb'),
+          notify  => Service['marathon']
         }
       }
       default : {
-        fail("I don't know how to create an init script for style ${marathon::init_style}")
+        fail("I don't know how to create an init script \
+          for style ${marathon::init_style}")
       }
     }
   }

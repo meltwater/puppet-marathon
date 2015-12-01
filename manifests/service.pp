@@ -7,5 +7,6 @@ class marathon::service {
   service { 'marathon':
     ensure  => $marathon::service_ensure,
     enable  => $marathon::service_enable,
+    require => Class['marathon::install']
   }
 }
