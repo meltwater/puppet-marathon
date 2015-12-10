@@ -14,40 +14,78 @@ class marathon::install {
     }
   }
 
+  $real_user = $marathon::user
+
+  if $marathon::manage_user == true and
+    !defined(User[$marathon::user]) and
+    !defined(Group[$marathon::group]) and
+    $marathon::user != 'root' {
+
+    ensure_resource('group', $marathon::group, {
+      ensure => present,
+      name   => $marathon::group
+    })
+    $real_group = $marathon::group
+
+    ensure_resource('user', $marathon::user, {
+      ensure     => present,
+      managehome => true,
+      shell      => '/sbin/nologin',
+      require    => [Group[$marathon::group]],
+      groups     => [$marathon::group, 'root']
+    })
+
+  } elsif $marathon::manage_user == true and
+    !defined(User[$marathon::user]) and
+    $marathon::user == 'root' {
+
+    ensure_resource('user', $marathon::user, {
+      ensure => present
+    })
+
+  }
+
   if $marathon::init_style {
     case $marathon::init_style {
       'upstart' : {
-        file { '/etc/init/marathon.conf':
+        file { 'marathon-conf':
+          path    => '/etc/init/marathon.conf',
           mode    => '0444',
-          owner   => 'root',
-          group   => 'root',
+          owner   => $real_user,
+          group   => $real_group,
           content => template('marathon/marathon.upstart.erb'),
+          before  => Service['marathon'],
           notify  => Service['marathon']
         }
         file { '/etc/init.d/marathon':
           ensure => link,
           target => '/lib/init/upstart-job',
-          owner  => root,
-          group  => root,
+          owner  => $real_user,
+          group  => $real_group,
           mode   => '0755',
+          before => Service['marathon'],
           notify => Service['marathon']
         }
       }
       'systemd' : {
-        file { '/lib/systemd/system/marathon.service':
+        file { 'marathon-conf':
+          path    => '/lib/systemd/system/marathon.service',
           mode    => '0644',
-          owner   => 'root',
-          group   => 'root',
+          owner   => $real_user,
+          group   => $real_group,
           content => template('marathon/marathon.systemd.erb'),
+          before  => Service['marathon'],
           notify  => Service['marathon']
         }
       }
       'sysv' : {
-        file { '/etc/init.d/marathon':
+        file { 'marathon-conf':
+          path    => '/etc/init.d/marathon',
           mode    => '0555',
-          owner   => 'root',
-          group   => 'root',
+          owner   => $real_user,
+          group   => $real_group,
           content => template('marathon/marathon.sysv.erb'),
+          before  => Service['marathon'],
           notify  => Service['marathon']
         }
       }
