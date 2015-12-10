@@ -8,6 +8,7 @@ ExecStart=<%= scope.lookupvar('marathon::bin_path') %>/marathon --master <%= sco
 Restart=on-abort
 Restart=always
 RestartSec=20
+User=<%= scope.lookupvar('marathon::user') %>
 
 [Install]
 WantedBy=multi-user.target

@@ -8,7 +8,8 @@
 #   The package name. Defaults to 'marathon'.
 #
 # [*package_ensure*]
-#   Package ensure. Defaults to latest. Can be used to install a specific version of marathon
+#   Package ensure. Defaults to latest. Can be used to install
+#    a specific version of marathon
 #
 # [*install_java*]
 #   Whether to install the java JDK or not
@@ -52,6 +53,9 @@ class marathon (
   $extra_options        = '',
   $master               = 'zk://localhost:2181/mesos',
   $zk                   = 'zk://localhost:2181/marathon',
+  $manage_user          = false,
+  $user                 = 'root',
+  $group                = undef,
 ) inherits marathon::params {
 
   validate_bool($install_java)
