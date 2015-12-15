@@ -45,6 +45,11 @@ class marathon::install {
 
   }
 
+  $real_group = $marathon::group ? {
+    undef   => $marathon::user,
+    default => $marathon::group
+  }
+
   if $marathon::init_style {
     case $marathon::init_style {
       'upstart' : {
