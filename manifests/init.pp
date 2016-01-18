@@ -41,7 +41,6 @@
 # Author Name <william.leese@meltwater.com>
 #
 class marathon (
-  $version              = $marathon::params::version,
   $package              = $marathon::params::package,
   $package_ensure       = $marathon::params::package_ensure,
   $install_java         = $marathon::params::install_java,
@@ -60,6 +59,7 @@ class marathon (
 
   validate_bool($install_java)
   validate_bool($service_enable)
+  validate_bool($manage_user)
 
   class { 'marathon::install': } ->
   class { 'marathon::service': }
