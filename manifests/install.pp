@@ -43,11 +43,10 @@ class marathon::install {
       ensure => present
     })
 
-  }
+    $real_group = $marathon::user
 
-  $real_group = $marathon::group ? {
-    undef   => $marathon::user,
-    default => $marathon::group
+  } else {
+    $real_group = $marathon::user
   }
 
   if $marathon::init_style {
