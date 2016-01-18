@@ -4,8 +4,16 @@
 #
 class marathon::install {
 
-  package { $marathon::package:
-    ensure => $marathon::package_ensure,
+  if $marathon::manage_repo {
+    include marathon::repo
+    package { $marathon::package:
+      ensure  => $marathon::package_ensure,
+      require => Class['marathon::repo']
+    }
+  } else {
+    package { $marathon::package:
+      ensure => $marathon::package_ensure,
+    }
   }
 
   if $marathon::install_java {
