@@ -55,11 +55,13 @@ class marathon (
   $manage_user          = false,
   $user                 = 'root',
   $group                = undef,
+  $manage_repo          = false
 ) inherits marathon::params {
 
   validate_bool($install_java)
   validate_bool($service_enable)
   validate_bool($manage_user)
+  validate_bool($manage_repo)
 
   class { 'marathon::install': } ->
   class { 'marathon::service': }
