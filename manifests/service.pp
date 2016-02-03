@@ -10,10 +10,12 @@ class marathon::service {
   }
 
   service { 'marathon':
-    ensure    => $marathon::service_ensure,
-    enable    => $marathon::service_enable,
-    provider  => $provider,
-    subscribe => File['marathon-conf'],
-    require   => Class['marathon::install']
+    ensure     => $marathon::service_ensure,
+    enable     => $marathon::service_enable,
+    hasrestart => true,
+    hasstatus  => true,
+    provider   => $provider,
+    subscribe  => [File['marathon-conf'], Package[$marathon::package]],
+    require    => Class['marathon::install'],
   }
 }
