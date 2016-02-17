@@ -43,6 +43,7 @@
 class marathon (
   $package              = $marathon::params::package,
   $package_ensure       = $marathon::params::package_ensure,
+  $version              = $marathon::params::version,
   $install_java         = $marathon::params::install_java,
   $java_version         = $marathon::params::java_version,
   $init_style           = $marathon::params::init_style,

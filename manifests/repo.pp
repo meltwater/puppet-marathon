@@ -36,7 +36,7 @@ class marathon::repo {
           $mrel = '1'
         }
         default: {
-          notify { "'${mrel}' is not supported for ${source}": }
+          notify { "'${mrel}' is not supported for ${::source}": }
         }
       }
       case $osrel {
@@ -48,7 +48,7 @@ class marathon::repo {
           }
         }
         default: {
-          notify { "Yum repository '${source}' is not supported for major version ${::operatingsystemmajrelease}": }
+          notify { "Yum repository '${::source}' is not supported for major version ${::operatingsystemmajrelease}": }
         }
       }
     }

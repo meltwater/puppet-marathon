@@ -15,7 +15,7 @@ class marathon::service {
     hasrestart => true,
     hasstatus  => true,
     provider   => $provider,
-    subscribe  => [File['marathon-conf'], Package[$marathon::package]],
+    subscribe  => [File['marathon-conf'], Package['marathon']],
     require    => Class['marathon::install'],
   }
 }
