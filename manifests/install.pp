@@ -4,21 +4,30 @@
 #
 class marathon::install {
 
+  if $marathon::version {
+    $marathonpackage = "${marathon::package}-${marathon::version}"
+  } else {
+    $marathonpackage = $marathon::package
+  }
+
   if $marathon::manage_repo {
     include marathon::repo
-    package { $marathon::package:
+    package { 'marathon':
       ensure  => $marathon::package_ensure,
+      name    => $marathonpackage,
       require => Class['marathon::repo']
     }
   } else {
-    package { $marathon::package:
+    package { 'marathon':
       ensure => $marathon::package_ensure,
+      name   => $marathonpackage,
     }
   }
 
   if $marathon::install_java {
-    package { $marathon::java_version:
+    package { 'java':
       ensure => installed,
+      name   => $marathon::java_version,
     }
   }
 
@@ -81,6 +90,7 @@ class marathon::install {
       }
       'systemd' : {
         file { 'marathon-conf':
+          ensure  => file,
           path    => '/lib/systemd/system/marathon.service',
           mode    => '0644',
           owner   => $real_user,
@@ -92,6 +102,7 @@ class marathon::install {
       }
       'sysv' : {
         file { 'marathon-conf':
+          ensure  => file,
           path    => '/etc/init.d/marathon',
           mode    => '0555',
           owner   => $real_user,
