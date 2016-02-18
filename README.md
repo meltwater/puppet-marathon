@@ -1,4 +1,4 @@
-# marathon
+# marathon [![Travis CI](https://img.shields.io/travis/meltwater/puppet-marathon/master.svg)](https://travis-ci.org/meltwater/puppet-marathon)
 
 #### Table of Contents
 
@@ -51,7 +51,8 @@ disabling puppet support of the service:
 
 ```puppet
 class { '::marathon':
-  package_ensure => '0.13.0',
+  package_ensure => 'present',
+  version        => '0.15.2',
   manage_repo    => true,
   install_java   => false,
   init_style     => 'systemd',
@@ -94,8 +95,13 @@ String, the name of the package to install.
 
 #### `package_ensure`
 
-Determines the ensure state of the package.  Set to installed by default, but could
+Determines the ensure state of the package.  Set to present by default, but could
 be changed to latest.
+
+#### `version`
+
+Determines the version of the package.  Set to undef by default, but could
+be changed to 0.15.2, etc...
 
 #### `manage_repo`
 
