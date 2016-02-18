@@ -1,4 +1,4 @@
-# marathon [![Travis CI](https://img.shields.io/travis/meltwater/puppet-marathon/master.svg)](https://travis-ci.org/meltwater/puppet-marathon)
+# marathon [![Build Status](https://travis-ci.org/meltwater/puppet-marathon.svg?branch=master)](https://travis-ci.org/meltwater/puppet-marathon)
 
 #### Table of Contents
 
