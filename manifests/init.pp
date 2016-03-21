@@ -90,6 +90,7 @@ class marathon (
   validate_bool($service_enable)
   validate_bool($manage_user)
   validate_bool($manage_repo)
+  validate_bool($authenticate)
 
   if $authenticate {
     if $auth_principal == undef {
