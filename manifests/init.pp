@@ -30,6 +30,27 @@
 # [*zk*]
 #   The ZooKeeper URL for storing state.
 #
+# [*authenticate*]
+#   Use Mesos Authentication (principle and secret) to authenticate with the master
+#   default: false
+#
+# [*auth_principal*]
+#   Principal to use when authenticating with Mesos.
+#   See Mesos authentication and ACL's for more info.
+#
+#   Required if authenticate => true
+#
+# [*auth_secret*]
+#   Secret to use for authentication with principal.  It is a good idea to encrypt this,
+#   out of the box Mesos is configured to use HTTP.
+#
+#   Required if authenticate => true
+#
+# [*secret_file*]
+#   File in which to store our secret for slave authentication
+#
+#   Required if authenticate => true
+
 # === Examples
 #
 #  class { marathon:
@@ -56,13 +77,29 @@ class marathon (
   $manage_user          = false,
   $user                 = 'root',
   $group                = undef,
-  $manage_repo          = false
+  $manage_repo          = false,
+  $authenticate         = false,
+  $secret_file          = '/etc/mesos/marathon.secret',
+  $auth_principal       = undef,
+  $auth_secret          = undef,
+  $auth_role            = undef
+
 ) inherits marathon::params {
 
   validate_bool($install_java)
   validate_bool($service_enable)
   validate_bool($manage_user)
   validate_bool($manage_repo)
+
+  if $authenticate {
+    if $auth_principal == undef {
+      fail("You must provide a principal when using authentication.")
+    }
+    if $auth_secret == undef {
+      fail("You must provide a secret when using authentication.")
+    }
+  }
+
 
   class { 'marathon::install': } ->
   class { 'marathon::service': }

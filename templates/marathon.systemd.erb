@@ -4,7 +4,17 @@ After=network.target
 Wants=network.target
 
 [Service]
-ExecStart=<%= scope.lookupvar('marathon::bin_path') %>/marathon --master <%= scope.lookupvar('marathon::master') %> --zk <%= scope.lookupvar('marathon::zk') %> <%= scope.lookupvar('marathon::extra_options') %>
+ExecStart=<%= scope.lookupvar('marathon::bin_path') %>/marathon \
+--master <%= scope.lookupvar('marathon::master') %> \
+--zk <%= scope.lookupvar('marathon::zk') %> \
+<% if scope.lookupvar('marathon::authenticate') -%>
+    --mesos_authentication_principal <%= scope.lookupvar('marathon::auth_principal') %> \
+    --mesos_authentication_secret_file <%= scope.lookupvar('marathon::secret_file') %> \
+    <%- if scope.lookupvar('marathon::auth_role') -%>
+        --mesos_role <%= scope.lookupvar('marathon::auth_role') %> \
+    <% end -%>
+<% end -%>
+<%= scope.lookupvar('marathon::extra_options') %>
 Restart=on-abort
 Restart=always
 RestartSec=20
