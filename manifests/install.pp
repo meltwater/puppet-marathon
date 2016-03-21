@@ -121,8 +121,8 @@ class marathon::install {
 
   if $marathon::authenticate  {
     file { 'marathon-secret-file':
-      path    => $marathon::secret_file,
       ensure  => file,
+      path    => $marathon::secret_file,
       mode    => '0600',
       owner   => $real_user,
       group   => $real_group,

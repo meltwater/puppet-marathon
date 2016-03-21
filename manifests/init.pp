@@ -93,10 +93,10 @@ class marathon (
 
   if $authenticate {
     if $auth_principal == undef {
-      fail("You must provide a principal when using authentication.")
+      fail('You must provide a principal when using authentication.')
     }
     if $auth_secret == undef {
-      fail("You must provide a secret when using authentication.")
+      fail('You must provide a secret when using authentication.')
     }
   }
 
