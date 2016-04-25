@@ -5,7 +5,7 @@
 class marathon::service {
 
   $provider = $marathon::init_style ? {
-    'sysv'  => 'init',
+    'sysv'  => 'redhat',
     default => $marathon::init_style
   }
 
