@@ -112,6 +112,18 @@ class marathon::install {
           notify  => Service['marathon']
         }
       }
+      'redhat' : {
+        file { 'marathon-conf':
+          ensure  => file,
+          path    => '/etc/init.d/marathon',
+          owner   => $real_user,
+          group   => $real_group,
+          mode    => '0755',
+          content => template('marathon/marathon.sysv.erb'),
+          before  => Service['marathon'],
+          notify  => Service['marathon']
+        }
+      }
       default : {
         fail("I don't know how to create an init script \
           for style ${marathon::init_style}")
