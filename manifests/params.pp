@@ -16,7 +16,7 @@ class marathon::params {
       default => undef
     },
     /CentOS|RedHat|OracleLinux/      => $::operatingsystemmajrelease ? {
-      /(4|5|6)/ => 'sysv',
+      /(4|5|6)/ => 'redhat',
       default   => 'systemd',
     },
     'Fedora'             => $::operatingsystemmajrelease ? {

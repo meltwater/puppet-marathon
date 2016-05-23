@@ -29,6 +29,10 @@ describe 'marathon', :type => 'class' do
           :ensure => 'file',
           :path   => '/etc/init.d/marathon'
           }) }
+
+        it { should contain_service('marathon').with({
+          :provider => 'redhat'
+          }) }
       end
 
       if operatingsystem == 'Fedora'
