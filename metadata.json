@@ -1,6 +1,6 @@
 {
   "name": "meltwater-marathon",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "meltwater",
   "summary": "Puppet module for installing and configuring the Marathon framework for Mesos.",
   "description": "Puppet module for installing and configuring the Marathon framework for Mesos.",
@@ -8,6 +8,17 @@
   "source": "https://github.com/meltwater/puppet-marathon",
   "project_page": "https://github.com/meltwater/puppet-marathon",
   "issues_url": "https://github.com/meltwater/puppet-marathon/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease":[ "6.0", "7.0" ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [ "14.04", "12.04" ]
+    }
+  ],
+  "tags": [ "marathon", "mesos", "docker" ],
   "dependencies": [
     {
       "name":"puppetlabs-stdlib",
@@ -15,4 +26,3 @@
     }
   ]
 }
-
