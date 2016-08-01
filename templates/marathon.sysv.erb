@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# marathon 
+# marathon
 #
 # chkconfig:   2345 55 25
 # description: marathon for mesos
@@ -9,8 +9,8 @@
 # Provides: marathon
 # Required-Start: $local_fs $network
 # Required-Stop: $local_fs $network
-# Should-Start: 
-# Should-Stop: 
+# Should-Start:
+# Should-Stop:
 # Default-Start: 2 3 4 5
 # Default-Stop: 0 1 6
 # Short-Description: Startup the Marathon framework
@@ -22,7 +22,16 @@
 
 prog="marathon"
 cmd="<%= scope.lookupvar('marathon::bin_path') %>/${prog}"
-args="--master <%= scope.lookupvar('marathon::master') %> --zk <%= scope.lookupvar('marathon::zk') %> <%= scope.lookupvar('marathon::extra_options') %>"
+args="--master <%= scope.lookupvar('marathon::master') %> \
+--zk <%= scope.lookupvar('marathon::zk') %> \
+<%- if scope.lookupvar('marathon::authenticate') -%>
+    --mesos_authentication_principal <%= scope.lookupvar('marathon::auth_principal') %> \
+    --mesos_authentication_secret_file <%= scope.lookupvar('marathon::secret_file') %> \
+    <%- if scope.lookupvar('marathon::auth_role') -%>
+        --mesos_role <%= scope.lookupvar('marathon::auth_role') %> \
+    <% end -%>
+<% end -%>
+<%= scope.lookupvar('marathon::extra_options') %>"
 pidfile="/var/run/${prog}"
 lockfile=/var/lock/subsys/$prog
 
