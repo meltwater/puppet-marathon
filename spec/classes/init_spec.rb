@@ -50,7 +50,7 @@ describe 'marathon', :type => 'class' do
           }) }
       end
     end
-    
+
     it { should contain_class('marathon::install').that_comes_before('marathon::service') }
 
     context 'with a custom package name' do
