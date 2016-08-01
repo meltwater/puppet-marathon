@@ -1,10 +1,10 @@
 # marathon
 [![Puppet Forge Version](http://img.shields.io/puppetforge/v/meltwater/marathon.svg)](https://forge.puppetlabs.com/meltwater/marathon)
 [![Puppet Forge Downloads](http://img.shields.io/puppetforge/dt/meltwater/marathon.svg)](https://forge.puppetlabs.com/meltwater/marathon)
-[![Travis branch](https://img.shields.io/travis/meltwater/puppet-marathon/master.svg)]()
+[![Travis branch](https://img.shields.io/travis/meltwater/puppet-marathon/master.svg)](https://travis-ci.org/meltwater/puppet-marathon)
 [![By Meltwater](https://img.shields.io/badge/by-meltwater-28bbbb.svg)](http://underthehood.meltwater.com/)
-[![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
-[![license](https://img.shields.io/github/license/meltwater/puppet-marathon.svg)]()
+[![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)](https://github.com/meltwater/puppet-marathon/commits/master)
+[![license](https://img.shields.io/github/license/meltwater/puppet-marathon.svg)](https://github.com/meltwater/puppet-marathon/blob/master/LICENSE)
 
 #### Table of Contents
 
