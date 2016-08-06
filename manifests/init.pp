@@ -21,24 +21,26 @@
 #   What style of init system your system uses.
 #
 # [*master*]
-#   The URL of the Mesos master. The format is a comma-delimited list of of
-#   hosts like zk://host1:port,host2:port/mesos. If using ZooKeeper, pay
-#   particular attention to the leading zk:// and trailing /mesos!
-#   If not using ZooKeeper, standard URLs like http://localhost are also
-#   acceptable.
+#   An array of Mesos master URLs.
+#   If using zookeeper, the format is ['host1', 'host2'] or
+#   ['host1:2181', 'host2:2181']. That will internally
+#   be converted to a zk url like ``zk://host1:port,host2:port/mesos`` by using
+#   ``master_zk_path``(default: mesos) and ``zk_default_port``(default: 2181)
+#   If not using ZooKeeper, a format like ['http://host1', 'http://host2']
+#   is also acceptable with ``master_url_type`` set to "http"
 #
 # [*zk*]
-#   The ZooKeeper URL for storing state.
+#   An array of ZooKeeper IPs.
+#   The format is ['host1', 'host2'] or
+#   ['host1:2181', 'host2:2181']. That will internally be converted
+#   to a zk url like ``zk://host1:port,host2:port/marathon`` by using
+#   ``zk_path``(default: marathon) and ``zk_default_port``(default: 2181)
 #
 # === Examples
 #
 #  class { marathon:
 #    package_ensure => '0.6.0',
 #  }
-#
-# === Authors
-#
-# Author Name <william.leese@meltwater.com>
 #
 class marathon (
   $package              = $marathon::params::package,
@@ -50,9 +52,13 @@ class marathon (
   $bin_path             = $marathon::params::bin_path,
   $service_enable       = true,
   $service_ensure       = 'running',
-  $extra_options        = '',
-  $master               = 'zk://localhost:2181/mesos',
-  $zk                   = 'zk://localhost:2181/marathon',
+  $extra_options        = undef,
+  $master               = ['localhost'],
+  $master_url_type      = 'zookeeper',
+  $master_zk_path       = 'mesos',
+  $zk                   = ['localhost'],
+  $zk_path              = 'marathon',
+  $zk_default_port      = '2181',
   $manage_user          = false,
   $user                 = 'root',
   $group                = undef,
@@ -64,6 +70,6 @@ class marathon (
   validate_bool($manage_user)
   validate_bool($manage_repo)
 
-  class { 'marathon::install': } ->
-  class { 'marathon::service': }
+  class { '::marathon::install': } ->
+  class { '::marathon::service': }
 }

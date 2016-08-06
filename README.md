@@ -57,18 +57,22 @@ disabling puppet support of the service:
 
 ```puppet
 class { '::marathon':
-  package_ensure => 'present',
-  version        => '0.15.2',
-  manage_repo    => true,
-  install_java   => false,
-  init_style     => 'systemd',
-  bin_path       => '/usr/bin',
-  extra_options  => '--event_subscriber http_callback',
-  master         => 'zk://localhost:2181/mesos',
-  zk             => 'zk://localhost:2181/marathon',
-  manage_user    => true,
-  user           => 'marathon',
-  group          => 'marathon',
+  package_ensure  => 'present',
+  version         => '0.15.2',
+  manage_repo     => true,
+  install_java    => false,
+  init_style      => 'systemd',
+  bin_path        => '/usr/bin',
+  extra_options   => '--event_subscriber http_callback',
+  master          => ['localhost'], # or ['localhost:2181']
+  master_url_type => 'zookeeper', # default
+  master_zk_path  => 'mesos', # default
+  zk              => ['localhost'],
+  zk_path         => 'marathon', # default
+  zk_default_port => '2181', # default
+  manage_user     => true,
+  user            => 'marathon',
+  group           => 'marathon',
 }
 
 ```
@@ -143,14 +147,38 @@ String, the extra options on the marathon command
 
 #### `master`
 
-String, The URL of the Mesos master. The format is a comma-delimited list of
-hosts like ``zk://host1:port,host2:port/mesos``. If using ZooKeeper, pay
-particular attention to the leading ``zk://`` and trailing ``/mesos``!
-If not using ZooKeeper, standard URLs like ``http://localhost`` are also acceptable.
+Array, An array of Mesos master URLs.
+If using zookeeper, the format is ``['host1', 'host2']`` or
+``['host1:2181', 'host2:2181']``. That will internally
+be converted to a zk url like ``zk://host1:port,host2:port/mesos`` by using
+``master_zk_path``(default: mesos) and ``zk_default_port``(default: 2181)
+If not using ZooKeeper, a format like ``['http://host1', 'http://host2']``
+is also acceptable with ``master_url_type`` set to "http"
 
 #### `zk`
 
-String, The ZooKeeper URL for storing state.
+Array, The ZooKeeper Hosts for storing state.
+An array of ZooKeeper IPs.
+The format is ``['host1', 'host2']`` or
+``['host1:2181', 'host2:2181']``. That will internally be converted
+to a zk url like ``zk://host1:port,host2:port/marathon`` by using
+``zk_path``(default: marathon) and ``zk_default_port``(default: 2181)
+
+#### `master_url_type`
+
+String, the type of the master endpoints, 'zookeeper' or 'http'
+
+#### `master_zk_path`
+
+String, the trailing path to use for the ``master`` endpoints.
+
+#### `zk_path`
+
+String, the trailing path to use for the ``zk`` endpoints.
+
+#### `zk_default_port`
+
+String, the default port to use for zookeeper urls.
 
 #### `manage_user`
 
