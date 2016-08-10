@@ -52,7 +52,7 @@ class marathon (
   $bin_path             = $marathon::params::bin_path,
   $service_enable       = true,
   $service_ensure       = 'running',
-  $extra_options        = undef,
+  $extra_options        = '',
   $master               = ['localhost'],
   $master_url_type      = 'zookeeper',
   $master_zk_path       = 'mesos',
