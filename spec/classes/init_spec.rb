@@ -51,7 +51,7 @@ describe 'marathon', :type => 'class' do
       end
     end
 
-    it { should contain_class('marathon::install').that_comes_before('marathon::service') }
+    it { should contain_class('marathon::install').that_comes_before('Class[marathon::service]') }
 
     context 'with a custom package name' do
       let(:params) { {'package' => 'marathon-custom-pkg-name' } }
@@ -118,6 +118,26 @@ describe 'marathon', :type => 'class' do
         :ensure => 'file',
         :path   => '/lib/systemd/system/marathon.service'
         }) }
+
+      context 'master and zk servers with defaults params' do
+        it 'should configure marathon with the correct arguments' do
+          should contain_file('marathon-conf').with_content(/ExecStart=\/usr\/bin\/marathon --master zk:\/\/localhost:2181\/mesos --zk zk:\/\/localhost:2181\/marathon/)
+        end
+      end
+
+      context 'master and zk servers with customs params' do
+        let(:params) {{
+          :master          => ['myhost'],
+          :master_zk_path  => 'mymesos',
+          :zk              => ['myhost2:2181'],
+          :zk_path         => 'mymarathon',
+          :zk_default_port => '2182',
+        }}
+
+        it 'should configure marathon with the correct arguments' do
+          should contain_file('marathon-conf').with_content(/ExecStart=\/usr\/bin\/marathon --master zk:\/\/myhost:2182\/mymesos --zk zk:\/\/myhost2:2181\/mymarathon/)
+        end
+      end
     end
   end
 end

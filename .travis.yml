@@ -8,14 +8,12 @@ script: bundle exec rake test
 matrix:
   fast_finish: true
   include:
-  - rvm: 1.9.3
-    env: PUPPET_VERSION="~> 3.3.0"
-  - rvm: 1.9.3
+  - rvm: 2.0.0
     env: PUPPET_VERSION="~> 3.0" FUTURE_PARSER="yes"
   - rvm: 2.0.0
     env: PUPPET_VERSION="~> 3.3.0"
   - rvm: 2.0.0
-    env: PUPPET_VERSION="~> 3.0" FUTURE_PARSER="yes"
+    env: PUPPET_VERSION="~> 3.7"
   - rvm: 2.1.0
     env: PUPPET_VERSION="~> 3" FUTURE_PARSER="yes"
   - rvm: 2.1.8

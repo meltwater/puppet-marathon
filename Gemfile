@@ -1,18 +1,18 @@
 source "https://rubygems.org"
 
 group :test do
-  gem "rake"
-  gem "puppet", ENV['PUPPET_VERSION'] || '~> 3.7.0'
+  gem "rake", '~> 11.2.2'
+  gem "puppet", ENV['PUPPET_VERSION'] || '~> 4.5.3'
   # We use this to get around this issue https://github.com/rodjek/puppet-lint/issues/331
   # with puppet-lint not respecting ignore paths
-  gem "puppet-lint", :git => 'https://github.com/rodjek/puppet-lint.git', :ref => '62dfab'
-  gem "rspec-puppet", :git => 'https://github.com/rodjek/rspec-puppet.git'
-  gem "puppetlabs_spec_helper"
-  gem "metadata-json-lint"
+  gem "puppet-lint", '~> 2.0.0'
+  gem "rspec-puppet", '~> 2.4.0'
+  gem "puppetlabs_spec_helper", '~> 1.1.1'
+  gem "metadata-json-lint", '~> 0.0.11'
 end
 
 group :development do
-  gem "travis"
-  gem "travis-lint"
-  gem "guard-rake"
+  gem "travis", '~> 1.8.2'
+  gem "travis-lint", '~> 2.0.0'
+  gem "guard-rake", '~> 1.0.0'
 end
