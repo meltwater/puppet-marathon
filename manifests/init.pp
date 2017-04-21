@@ -62,7 +62,8 @@ class marathon (
   $manage_user          = false,
   $user                 = 'root',
   $group                = undef,
-  $manage_repo          = false
+  $manage_repo          = false,
+  $restart_sec          = '20'
 ) inherits marathon::params {
 
   validate_bool($install_java)
