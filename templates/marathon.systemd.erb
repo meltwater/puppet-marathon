@@ -7,7 +7,7 @@ Wants=network.target
 ExecStart=<%= scope.lookupvar('marathon::bin_path') %>/marathon --master <%= @master_url %> --zk <%= @zk_url %> <%= scope.lookupvar('marathon::extra_options') %>
 Restart=on-abort
 Restart=always
-RestartSec=20
+RestartSec=<%= scope.lookupvar('marathon::restart_sec') %>
 User=<%= scope.lookupvar('marathon::user') %>
 
 [Install]
